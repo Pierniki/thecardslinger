@@ -1,49 +1,16 @@
-import { getHandValue } from 'engine/blackjack'
+import { Blackjack } from 'components/Blackjack'
 import React from 'react'
+import { Provider } from 'react-redux'
+import { store } from 'state'
 
 function App() {
   return (
-    <div className="App">
-      <p className="w-full text-center font-pixel text-8xl">Home</p>
-      <p>
-        {getHandValue({
-          bet: 0,
-          cards: [{ pip: 'clubs', value: 'ace' }],
-        }).toString()}
-      </p>
-      <p>
-        {getHandValue({
-          bet: 0,
-          cards: [{ pip: 'clubs', value: 'three' }],
-        }).toString()}
-      </p>
-      <p>
-        {getHandValue({
-          bet: 0,
-          cards: [
-            { pip: 'clubs', value: 'two' },
-            { pip: 'clubs', value: 'ace' },
-          ],
-        }).toString()}
-      </p>
-      <p>
-        {getHandValue({
-          bet: 0,
-          cards: [
-            { pip: 'clubs', value: 'two' },
-            { pip: 'clubs', value: 'three' },
-            { pip: 'clubs', value: 'three' },
-            { pip: 'clubs', value: 'four' },
-            { pip: 'clubs', value: 'four' },
-            { pip: 'clubs', value: 'four' },
-
-            { pip: 'clubs', value: 'ace' },
-            { pip: 'clubs', value: 'ace' },
-            { pip: 'clubs', value: 'ace' },
-          ],
-        }).toString()}
-      </p>
-    </div>
+    <Provider store={store}>
+      <div className="App font-pixel">
+        <p className="w-full text-center  text-5xl my-8">Home</p>
+        <Blackjack />
+      </div>
+    </Provider>
   )
 }
 
