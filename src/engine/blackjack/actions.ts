@@ -39,3 +39,15 @@ export const betAction = (
   state.hands[action.payload.handIdx].bet = action.payload.bet
   return state
 }
+
+export const doubleDownAction = (
+  old: Blackjack,
+  action: { payload: { handIdx: number } },
+) => {
+  const handIdx = action.payload.handIdx
+  const state = _.cloneDeep(old)
+  const afterHit = hitAction(state, action)
+  afterHit.hands[handIdx].bet = afterHit.hands[handIdx].bet * 2
+  afterHit.hands[handIdx].state = 'standing'
+  return afterHit
+}

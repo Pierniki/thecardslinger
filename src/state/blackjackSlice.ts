@@ -3,6 +3,7 @@ import {
   betAction,
   Blackjack,
   createNewHand,
+  doubleDownAction,
   hitAction,
   standAction,
 } from 'engine/blackjack'
@@ -22,6 +23,7 @@ export const blackjackSlice = createSlice({
     bet: betAction,
     hit: hitAction,
     stand: standAction,
+    doubleDown: doubleDownAction,
     act: (
       blackjack: Blackjack,
       action: { payload: { blackjack: Blackjack } },
@@ -29,5 +31,5 @@ export const blackjackSlice = createSlice({
   },
 })
 
-export const { bet, hit, stand, act } = blackjackSlice.actions
+export const { bet, hit, stand, act, doubleDown } = blackjackSlice.actions
 export default blackjackSlice.reducer

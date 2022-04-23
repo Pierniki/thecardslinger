@@ -2,11 +2,6 @@ import { Card, Deck, shuffleDeck } from 'engine/common'
 import _ from 'lodash'
 import { createNewHand, getPossibleCardsValue } from './utility'
 
-// PLAYER CHOICES:
-// - hit
-// - double down
-// - split
-
 export interface Blackjack {
   state: PossibleBlackjackStates
   deck: Deck
@@ -62,7 +57,14 @@ export const playDealer = (old: Blackjack): Blackjack => {
 }
 
 export const prepareForBets = (state: Blackjack): Blackjack => ({
-  deck: state.deck,
+  deck: {
+    ...state.deck,
+    graveyard: [
+      ...state.deck.graveyard,
+      ...state.hands.flatMap((hand) => hand.cards),
+      ...state.dealer.cards,
+    ],
+  },
   hands: state.hands.map(() => createNewHand(0)),
   dealer: { cards: [], state: 'waiting' },
   state: 'betting',
@@ -74,6 +76,7 @@ export const deal = (old: Blackjack): Blackjack => {
   state.deck.graveyard = [
     ...state.deck.graveyard,
     ...state.hands.flatMap((hand) => hand.cards),
+    ...state.dealer.cards,
   ]
 
   if (state.deck.cards.length <= 0) state.deck = shuffleDeck(state.deck)

@@ -30,14 +30,14 @@ export const blackjackLoop = async (
   if (payoutTrigger) return updateState(blackjack, 'payout')
 
   if (blackjack.state === 'dealing')
-    return wait(1000).then(() => deal(blackjack))
+    return wait(500).then(() => deal(blackjack))
   if (blackjack.state === 'dealerTurn')
-    return wait(1000).then(() => playDealer(blackjack))
+    return wait(1500).then(() => playDealer(blackjack))
   if (blackjack.state === 'payout') {
     blackjack.hands.forEach((hand, idx) =>
       addMoney(idx, calculateWinnings(hand, blackjack.dealer)),
     )
-    return wait(1000).then(() => prepareForBets(blackjack))
+    return wait(1500).then(() => prepareForBets(blackjack))
   }
 
   return blackjack
