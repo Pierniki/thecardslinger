@@ -61,8 +61,10 @@ const calculateWinnings = (hand: Hand, dealer: Dealer) => {
     hand.state === 'standing' &&
     handValue > dealerValue
   const isWin = dealerBustWin || handWin
+  const isDraw = hand.state === 'standing' && handValue === dealerValue
   const isBlackjack = handValue === 21
 
+  if (isDraw) return hand.bet
   if (!isWin) return 0
   return hand.bet + hand.bet * (isBlackjack ? 1.5 : 1)
 }

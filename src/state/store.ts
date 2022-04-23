@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import blackjackReducer from './blackjackSlice'
+import playerReducer from './playerSlice'
 
 export const store = configureStore({
   reducer: {
     blackjack: blackjackReducer,
+    player: playerReducer,
   },
 })
 

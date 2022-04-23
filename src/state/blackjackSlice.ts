@@ -13,7 +13,7 @@ const initialState: Blackjack = {
   state: 'betting',
   deck: shuffleDeck(createNewDeck()),
   dealer: { cards: [], state: 'waiting' },
-  hands: [createNewHand(0)],
+  hands: [createNewHand(0), createNewHand(0)],
 }
 
 export const blackjackSlice = createSlice({
