@@ -47,8 +47,9 @@ const generateBinaryVariations = (n: number) =>
     i.toString(2).padStart(n, '0'),
   )
 
-export const createNewHand = (bet: number): Hand => ({
+export const createNewHand = (bet: number, type?: 'main' | 'split'): Hand => ({
   bet,
   state: 'playing',
   cards: [],
+  type: type ?? 'main',
 })

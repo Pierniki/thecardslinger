@@ -3,8 +3,9 @@ import { blackjackLoop, getPossibleCardsValue } from 'engine/blackjack'
 import _ from 'lodash'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'state'
-import { act, bet, doubleDown, hit, stand } from 'state/blackjackSlice'
+import { act, bet, doubleDown, hit, split, stand } from 'state/blackjackSlice'
 import { addMoney, removeMoney } from 'state/playerSlice'
+import { MoneyDisplay } from './MoneyDisplay'
 
 interface Props {}
 
@@ -22,9 +23,13 @@ export const Blackjack: React.FC<Props> = (props) => {
   const canDD = (handIdx: number) =>
     canHit(handIdx) &&
     money > blackjack.hands[handIdx].bet &&
-    blackjack.hands[handIdx].cards.length === 1
+    blackjack.hands[handIdx].cards.length === 2
   const showDealerCard =
     blackjack.state === 'dealerTurn' || blackjack.state === 'payout'
+  const canSplit = (handIdx: number) =>
+    canDD(handIdx) &&
+    blackjack.hands[handIdx].cards[0].value ===
+      blackjack.hands[handIdx].cards[1].value
 
   const awardWinnings = (idx: number, val: number) =>
     dispatch(addMoney({ amount: val }))
@@ -39,19 +44,13 @@ export const Blackjack: React.FC<Props> = (props) => {
 
   return (
     <div className="w-full text-center my-16 flex flex-col gap-4 items-center">
-      <p>Blackjack</p>
-      <code>
-        {JSON.stringify({
-          cards: blackjack.deck.cards.length,
-          graveyard: blackjack.deck.graveyard.length,
-        })}
-      </code>
-      <code>{JSON.stringify({ state: blackjack.state })}</code>
-
-      <div className="w-full max-w-sm h-32 flex justify-start gap-8">
-        <h4 className="text-lg">{money}</h4>
+      <div className="w-full max-w-sm  flex justify-center items-start gap-8 relative mb-8">
+        <div className="absolute left-0 ">
+          <MoneyDisplay money={money} />
+        </div>
+        <p className="text-lg">Blackjack</p>
       </div>
-      <div className="w-full max-w-sm  flex justify-center items-center gap-8 mb-16">
+      <div className="w-full max-w-sm  flex justify-center items-center gap-8 mb-8">
         <div className="absolute mr-48">
           {blackjack.dealer.cards.length > 0 && (
             <span
@@ -74,7 +73,8 @@ export const Blackjack: React.FC<Props> = (props) => {
               <div
                 className={`border-2 border-black h-24 w-16 absolute flex items-center justify-center bg-white`}
                 style={{
-                  translate: idx * 30,
+                  transform: card.transform,
+                  right: `-${idx * 75}px`,
                   backgroundColor:
                     showDealerCard || idx === 0 ? '' : 'slategrey',
                 }}
@@ -94,11 +94,11 @@ export const Blackjack: React.FC<Props> = (props) => {
           })}
         </div>
       </div>
-      <div className="w-full flex justify-center items-start gap-8 relative">
+      <div className="w-full flex justify-center items-start gap-44 relative">
         {blackjack.hands.map((hand, idx) => {
           return (
-            <div className="flex flex-col gap-4">
-              <div className="mr-48">
+            <div className="flex flex-col gap-8 items-center mt-16">
+              <div className="absolute top-0">
                 {hand.cards.length > 0 && (
                   <span
                     className="text-4xl"
@@ -110,12 +110,23 @@ export const Blackjack: React.FC<Props> = (props) => {
                   </span>
                 )}
               </div>
-              <div className="block relative h-24 w-16">
+              <div className="relative h-24 w-16 flex items-center">
+                {hand.bet !== 0 && hand.state !== 'bust' && (
+                  <span
+                    className="absolute  text-yellow-600 z-10 text-lg"
+                    style={{ left: '-35px', lineHeight: '40px' }}
+                  >
+                    {`${hand.bet}$`}
+                  </span>
+                )}
                 {hand.cards.map((card, idx) => {
                   return (
                     <div
-                      className={`border-2 border-black h-24 w-16 absolute flex items-center justify-center bg-white`}
-                      style={{ translate: idx * 30 }}
+                      className={`border-2 border-black h-24 w-16 absolute flex items-center justify-center bg-white transform`}
+                      style={{
+                        transform: card.transform,
+                        right: `-${idx * 25}px`,
+                      }}
                     >
                       <span className="absolute left-1 top-1 text-xs">
                         {pipMap[card.pip]}
@@ -133,44 +144,58 @@ export const Blackjack: React.FC<Props> = (props) => {
                   )
                 })}
               </div>
-              {canBet(idx) && (
-                <button
-                  className="border-4 p-2 border-black disabled:opacity-50 text-xs"
-                  onClick={() => {
-                    dispatch(bet({ handIdx: idx, bet: 1 }))
-                    dispatch(removeMoney({ amount: 1 }))
-                  }}
-                >
-                  bet
-                </button>
-              )}
-              {canHit(idx) && (
-                <button
-                  className="border-4 p-2 border-black disabled:opacity-50 text-xs"
-                  onClick={() => dispatch(stand({ handIdx: idx }))}
-                >
-                  stand
-                </button>
-              )}
-              {canHit(idx) && (
-                <button
-                  className="border-4 p-2 border-black  disabled:opacity-50 text-xs"
-                  onClick={() => dispatch(hit({ handIdx: idx }))}
-                >
-                  hit
-                </button>
-              )}
-              {canDD(idx) && (
-                <button
-                  className="border-4 p-2 border-black  disabled:opacity-50 text-xs"
-                  onClick={() => {
-                    dispatch(doubleDown({ handIdx: idx }))
-                    dispatch(removeMoney({ amount: 1 }))
-                  }}
-                >
-                  DD
-                </button>
-              )}
+              <div className="flex flex-col gap-2">
+                {canBet(idx) && (
+                  <button
+                    className="border-4 p-2 border-black disabled:opacity-50 text-xs"
+                    onClick={() => {
+                      dispatch(bet({ handIdx: idx, bet: 1 }))
+                      dispatch(removeMoney({ amount: 1 }))
+                    }}
+                  >
+                    bet
+                    <span className=" text-yellow-600 ml-2">1$</span>
+                  </button>
+                )}
+                {canHit(idx) && (
+                  <button
+                    className="border-4 p-2 border-black disabled:opacity-50 text-xs"
+                    onClick={() => dispatch(stand({ handIdx: idx }))}
+                  >
+                    stand
+                  </button>
+                )}
+                {canHit(idx) && (
+                  <button
+                    className="border-4 p-2 border-black  disabled:opacity-50 text-xs"
+                    onClick={() => dispatch(hit({ handIdx: idx }))}
+                  >
+                    hit
+                  </button>
+                )}
+                {canDD(idx) && (
+                  <button
+                    className="border-4 p-2 border-black  disabled:opacity-50 text-xs"
+                    onClick={() => {
+                      dispatch(doubleDown({ handIdx: idx }))
+                      dispatch(removeMoney({ amount: 1 }))
+                    }}
+                  >
+                    DD
+                  </button>
+                )}
+                {canSplit(idx) && (
+                  <button
+                    className="border-4 p-2 border-black  disabled:opacity-50 text-xs"
+                    onClick={() => {
+                      dispatch(split({ handIdx: idx }))
+                      dispatch(removeMoney({ amount: 1 }))
+                    }}
+                  >
+                    Split
+                  </button>
+                )}
+              </div>
             </div>
           )
         })}

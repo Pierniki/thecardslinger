@@ -1,6 +1,7 @@
 import { wait } from 'utility'
 import {
   Blackjack,
+  calculateWinnings,
   deal,
   Dealer,
   Hand,
@@ -45,26 +46,11 @@ export const blackjackLoop = async (
 
 const everyoneBet = (hands: Hand[]) => hands.every((hand) => hand.bet > 0)
 const everyoneBeenDealt = (hands: Hand[], dealer: Dealer) =>
-  hands.every((hand) => hand.cards.length === 1 && dealer.cards.length === 2)
+  hands.every((hand) => hand.cards.length === 2 && dealer.cards.length === 2)
 const everyonePlayed = (hands: Hand[]) =>
-  hands.every((hand) => hand.state !== 'playing')
+  hands.every(
+    (hand) =>
+      hand.state !== 'playing' || getActualCardsValue(hand.cards) === 21,
+  )
 const dealerPlayed = (dealer: Dealer) =>
   dealer.state === 'bust' || dealer.state === 'standing'
-
-const calculateWinnings = (hand: Hand, dealer: Dealer) => {
-  const handValue = getActualCardsValue(hand.cards)
-  const dealerValue = getActualCardsValue(dealer.cards)
-
-  const dealerBustWin = dealer.state === 'bust' && hand.state !== 'bust'
-  const handWin =
-    dealer.state === 'standing' &&
-    hand.state === 'standing' &&
-    handValue > dealerValue
-  const isWin = dealerBustWin || handWin
-  const isDraw = hand.state === 'standing' && handValue === dealerValue
-  const isBlackjack = handValue === 21
-
-  if (isDraw) return hand.bet
-  if (!isWin) return 0
-  return hand.bet + hand.bet * (isBlackjack ? 1.5 : 1)
-}

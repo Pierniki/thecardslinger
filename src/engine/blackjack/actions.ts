@@ -1,7 +1,7 @@
-import { Card, shuffleDeck } from 'engine/common'
+import { Card, drawCards, shuffleDeck } from 'engine/common'
 import _ from 'lodash'
 import { Blackjack } from './blackjack'
-import { getPossibleCardsValue } from './utility'
+import { createNewHand, getPossibleCardsValue } from './utility'
 
 export const hitAction = (
   old: Blackjack,
@@ -50,4 +50,23 @@ export const doubleDownAction = (
   afterHit.hands[handIdx].bet = afterHit.hands[handIdx].bet * 2
   afterHit.hands[handIdx].state = 'standing'
   return afterHit
+}
+
+export const splitAction = (
+  old: Blackjack,
+  action: { payload: { handIdx: number } },
+) => {
+  const handIdx = action.payload.handIdx
+  const state = _.cloneDeep(old)
+
+  const newHand = createNewHand(state.hands[handIdx].bet, 'split')
+  newHand.cards.push(state.hands[handIdx].cards.pop() as Card)
+  const draw = drawCards(state.deck, 2)
+  state.deck = draw.deck
+
+  state.hands[handIdx].cards.push(draw.cards.pop() as Card)
+  newHand.cards.push(draw.cards.pop() as Card)
+  state.hands = [...state.hands, newHand]
+
+  return state
 }

@@ -1,6 +1,10 @@
-import { Card, Deck, shuffleDeck } from 'engine/common'
+import { Card, Deck, drawCards, shuffleDeck } from 'engine/common'
 import _ from 'lodash'
-import { createNewHand, getPossibleCardsValue } from './utility'
+import {
+  createNewHand,
+  getActualCardsValue,
+  getPossibleCardsValue,
+} from './utility'
 
 export interface Blackjack {
   state: PossibleBlackjackStates
@@ -18,6 +22,7 @@ export interface Hand {
   bet: number
   state: PossibleHandStates
   cards: Card[]
+  type: 'main' | 'split'
 }
 
 export type PossibleBlackjackStates =
@@ -65,7 +70,9 @@ export const prepareForBets = (state: Blackjack): Blackjack => ({
       ...state.dealer.cards,
     ],
   },
-  hands: state.hands.map(() => createNewHand(0)),
+  hands: state.hands
+    .filter((hand) => hand.type === 'main')
+    .map(() => createNewHand(0)),
   dealer: { cards: [], state: 'waiting' },
   state: 'betting',
 })
@@ -79,17 +86,34 @@ export const deal = (old: Blackjack): Blackjack => {
     ...state.dealer.cards,
   ]
 
-  if (state.deck.cards.length <= 0) state.deck = shuffleDeck(state.deck)
-  state.dealer.cards = [state.deck.cards.pop() as Card]
-  if (state.deck.cards.length <= 0) state.deck = shuffleDeck(state.deck)
-  state.dealer.cards = [...state.dealer.cards, state.deck.cards.pop() as Card]
+  const draw = drawCards(state.deck, 2)
+  state.dealer.cards = draw.cards
+  state.deck = draw.deck
 
   const newHands = state.hands.map((hand) => {
-    if (state.deck.cards.length <= 0) state.deck = shuffleDeck(state.deck)
-    const topCard = state.deck.cards.pop() as Card
-    return { ...hand, cards: [topCard] }
+    const draw = drawCards(state.deck, 2)
+    state.deck = draw.deck
+    return { ...hand, cards: draw.cards }
   })
   state.hands = newHands
 
   return state
+}
+
+export const calculateWinnings = (hand: Hand, dealer: Dealer) => {
+  const handValue = getActualCardsValue(hand.cards)
+  const dealerValue = getActualCardsValue(dealer.cards)
+
+  const dealerBustWin = dealer.state === 'bust' && hand.state !== 'bust'
+  const handWin =
+    dealer.state === 'standing' &&
+    hand.state === 'standing' &&
+    handValue > dealerValue
+  const isWin = dealerBustWin || handWin
+  const isDraw = hand.state === 'standing' && handValue === dealerValue
+  const isBlackjack = handValue === 21
+
+  if (isDraw) return hand.bet
+  if (!isWin) return 0
+  return hand.bet + hand.bet * (isBlackjack ? 1.5 : 1)
 }

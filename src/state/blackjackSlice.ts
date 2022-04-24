@@ -5,6 +5,7 @@ import {
   createNewHand,
   doubleDownAction,
   hitAction,
+  splitAction,
   standAction,
 } from 'engine/blackjack'
 import { createNewDeck, shuffleDeck } from 'engine/common'
@@ -13,7 +14,7 @@ const initialState: Blackjack = {
   state: 'betting',
   deck: shuffleDeck(createNewDeck()),
   dealer: { cards: [], state: 'waiting' },
-  hands: [createNewHand(0), createNewHand(0)],
+  hands: [createNewHand(0)],
 }
 
 export const blackjackSlice = createSlice({
@@ -24,6 +25,7 @@ export const blackjackSlice = createSlice({
     hit: hitAction,
     stand: standAction,
     doubleDown: doubleDownAction,
+    split: splitAction,
     act: (
       blackjack: Blackjack,
       action: { payload: { blackjack: Blackjack } },
@@ -31,5 +33,12 @@ export const blackjackSlice = createSlice({
   },
 })
 
-export const { bet, hit, stand, act, doubleDown } = blackjackSlice.actions
+export const {
+  bet,
+  hit,
+  stand,
+  act,
+  doubleDown,
+  split,
+} = blackjackSlice.actions
 export default blackjackSlice.reducer
