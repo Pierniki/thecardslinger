@@ -1,7 +1,7 @@
 import { Card, drawCards, shuffleDeck } from 'engine/common'
 import _ from 'lodash'
 import { Blackjack } from './blackjack'
-import { createNewHand, getPossibleCardsValue } from './utility'
+import { createNewHand, getActualCardsValue } from './utility'
 
 export const hitAction = (
   old: Blackjack,
@@ -14,10 +14,9 @@ export const hitAction = (
   const topCard = state.deck.cards.pop() as Card
   state.hands[handIdx].cards.push(topCard)
 
-  const cardsValue = getPossibleCardsValue(state.hands[handIdx].cards)
-  if (cardsValue.some((val) => val === 21))
-    state.hands[handIdx].state = 'standing'
-  if (cardsValue[0] > 21) state.hands[handIdx].state = 'bust'
+  const cardsValue = getActualCardsValue(state.hands[handIdx].cards)
+  if (cardsValue === 21) state.hands[handIdx].state = 'standing'
+  if (cardsValue > 21) state.hands[handIdx].state = 'bust'
   return state
 }
 

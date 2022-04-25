@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       fontFamily: {
         pixel: ['"PixelCowboy"', 'cursive'],
+        card: ['"Card"', 'cursive'],
       },
     },
   },

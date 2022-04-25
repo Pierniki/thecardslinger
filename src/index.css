@@ -7,13 +7,22 @@
   src: url('../public/fonts/PixelCowboy.otf');
 }
 
+@font-face {
+  font-family: 'Card';
+  src: url('../public/fonts/slkscr.ttf');
+}
+
 body {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+
   margin: 0;
+  image-rendering: pixelated;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 code {

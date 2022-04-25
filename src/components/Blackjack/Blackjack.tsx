@@ -5,7 +5,8 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'state'
 import { act, bet, doubleDown, hit, split, stand } from 'state/blackjackSlice'
 import { addMoney, removeMoney } from 'state/playerSlice'
-import { MoneyDisplay } from './MoneyDisplay'
+import { MoneyDisplay } from '../MoneyDisplay'
+import { PlayingCard } from './PlayingCard'
 
 interface Props {}
 
@@ -54,7 +55,7 @@ export const Blackjack: React.FC<Props> = (props) => {
         <div className="absolute mr-48">
           {blackjack.dealer.cards.length > 0 && (
             <span
-              className="text-4xl"
+              className="text-xl"
               style={{
                 color: blackjack.dealer.state === 'bust' ? 'red' : '',
               }}
@@ -71,24 +72,15 @@ export const Blackjack: React.FC<Props> = (props) => {
           {blackjack.dealer.cards.map((card, idx) => {
             return (
               <div
-                className={`border-2 border-black h-24 w-16 absolute flex items-center justify-center bg-white`}
+                className="absolute"
                 style={{
-                  transform: card.transform,
                   right: `-${idx * 75}px`,
-                  backgroundColor:
-                    showDealerCard || idx === 0 ? '' : 'slategrey',
                 }}
               >
-                {(showDealerCard || idx === 0) && (
-                  <>
-                    <span className="absolute left-2 top-2 text-xs">
-                      {valueMap[card.value]}
-                    </span>
-                    <span className="absolute right-2 bottom-2 text-xs">
-                      {valueMap[card.value]}
-                    </span>
-                  </>
-                )}
+                <PlayingCard
+                  card={card}
+                  hidden={!showDealerCard && idx !== 0}
+                />
               </div>
             )
           })}
@@ -101,7 +93,7 @@ export const Blackjack: React.FC<Props> = (props) => {
               <div className="absolute top-0">
                 {hand.cards.length > 0 && (
                   <span
-                    className="text-4xl"
+                    className="text-xl"
                     style={{
                       color: hand.state === 'bust' ? 'red' : '',
                     }}
@@ -122,24 +114,10 @@ export const Blackjack: React.FC<Props> = (props) => {
                 {hand.cards.map((card, idx) => {
                   return (
                     <div
-                      className={`border-2 border-black h-24 w-16 absolute flex items-center justify-center bg-white transform`}
-                      style={{
-                        transform: card.transform,
-                        right: `-${idx * 25}px`,
-                      }}
+                      className="absolute"
+                      style={{ right: `-${idx * 25}px` }}
                     >
-                      <span className="absolute left-1 top-1 text-xs">
-                        {pipMap[card.pip]}
-                      </span>
-                      <span className="absolute left-2 top-5 text-xs">
-                        {valueMap[card.value]}
-                      </span>
-                      <span className="absolute right-2 bottom-5 text-xs">
-                        {valueMap[card.value]}
-                      </span>
-                      <span className="absolute right-1 bottom-1 text-xs">
-                        {pipMap[card.pip]}
-                      </span>
+                      <PlayingCard card={card} />
                     </div>
                   )
                 })}
@@ -202,27 +180,4 @@ export const Blackjack: React.FC<Props> = (props) => {
       </div>
     </div>
   )
-}
-
-const pipMap = {
-  clubs: '♣️',
-  diamonds: '♦️',
-  hearts: '♥️',
-  spades: '♠️',
-}
-
-const valueMap = {
-  two: '2',
-  three: '3',
-  four: '4',
-  five: '5',
-  six: '6',
-  seven: '7',
-  eight: '8',
-  nine: '9',
-  ten: '10',
-  jack: 'J',
-  queen: 'Q',
-  king: 'K',
-  ace: 'A',
 }

@@ -93,7 +93,13 @@ export const deal = (old: Blackjack): Blackjack => {
   const newHands = state.hands.map((hand) => {
     const draw = drawCards(state.deck, 2)
     state.deck = draw.deck
-    return { ...hand, cards: draw.cards }
+
+    const cardsValue = getActualCardsValue(draw.cards)
+    return {
+      ...hand,
+      cards: draw.cards,
+      state: cardsValue === 21 ? 'standing' : hand.state,
+    }
   })
   state.hands = newHands
 

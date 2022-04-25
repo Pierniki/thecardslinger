@@ -7,7 +7,6 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App font-pixel">
-        <p className="w-full text-center  text-5xl my-8">Home</p>
         <Blackjack />
       </div>
     </Provider>
