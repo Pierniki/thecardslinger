@@ -19,8 +19,8 @@ export const MoneyDisplay: React.FC<Props> = ({ money }) => {
   }, [money])
 
   return (
-    <div className="flex flex-col justify-start items-start">
-      <h4 className="text-lg text-yellow-600">{`${prevValue}$`}</h4>
+    <div className="flex flex-row justify-start gap-2 items-start text-sm p-1">
+      <h4 className="text-[#eca91f]">{`${prevValue}$`}</h4>
       {changeAmount !== 0 && (
         <h6
           className={changeAmount > 0 ? 'text-green-600' : 'text-red-600'}

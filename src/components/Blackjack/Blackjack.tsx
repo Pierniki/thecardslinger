@@ -5,7 +5,6 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'state'
 import { act, bet, doubleDown, hit, split, stand } from 'state/blackjackSlice'
 import { addMoney, removeMoney } from 'state/playerSlice'
-import { MoneyDisplay } from '../MoneyDisplay'
 import { PlayingCard } from './PlayingCard'
 
 interface Props {}
@@ -44,13 +43,7 @@ export const Blackjack: React.FC<Props> = (props) => {
   }, [blackjack])
 
   return (
-    <div className="w-full text-center my-16 flex flex-col gap-4 items-center">
-      <div className="w-full max-w-sm  flex justify-center items-start gap-8 relative mb-8">
-        <div className="absolute left-0 ">
-          <MoneyDisplay money={money} />
-        </div>
-        <p className="text-lg">Blackjack</p>
-      </div>
+    <div className="w-full text-center  flex flex-col gap-4 items-center">
       <div className="w-full max-w-sm  flex justify-center items-center gap-8 mb-8">
         <div className="absolute mr-48">
           {blackjack.dealer.cards.length > 0 && (
