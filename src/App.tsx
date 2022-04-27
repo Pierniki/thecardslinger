@@ -7,7 +7,7 @@ import { store } from 'state'
 function App() {
   return (
     <Provider store={store}>
-      <div className="App font-pixel">
+      <div className="font-pixel bg-stone-700 h-screen flex flex-col overflow-x-hidden relative">
         <TopBar />
         <Blackjack />
       </div>

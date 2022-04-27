@@ -47,7 +47,8 @@ export const doubleDownAction = (
   const state = _.cloneDeep(old)
   const afterHit = hitAction(state, action)
   afterHit.hands[handIdx].bet = afterHit.hands[handIdx].bet * 2
-  afterHit.hands[handIdx].state = 'standing'
+  if (afterHit.hands[handIdx].state === 'playing')
+    afterHit.hands[handIdx].state = 'standing'
   return afterHit
 }
 

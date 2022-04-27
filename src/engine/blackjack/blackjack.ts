@@ -120,6 +120,6 @@ export const calculateWinnings = (hand: Hand, dealer: Dealer) => {
   const isBlackjack = handValue === 21
 
   if (isDraw) return hand.bet
-  if (!isWin) return 0
+  if (!isWin || hand.state === 'bust') return 0
   return hand.bet + hand.bet * (isBlackjack ? 1.5 : 1)
 }

@@ -12,7 +12,7 @@ const cardsPath = '/assets/cards'
 export const PlayingCard: React.FC<Props> = ({ card, hidden }) => {
   return (
     <div
-      className={`h-24 font-card w-16 relative flex items-center bg-center bg-cover justify-center transform font-bold text-lg`}
+      className={` h-20 font-card w-14 relative flex items-center bg-center bg-cover justify-center transform font-bold text-lg`}
       style={{
         backgroundImage: hidden
           ? `url(${cardsPath}/card_back_1.png)`
@@ -27,7 +27,7 @@ export const PlayingCard: React.FC<Props> = ({ card, hidden }) => {
           <img
             src={`${cardsPath}/${card.pip}.png`}
             alt={card.pip}
-            className="w-[30px] h-[30px]"
+            className="w-[25px] h-[25px]"
           />
           <span className="absolute right-2 bottom-0">
             {valueMap[card.value]}
