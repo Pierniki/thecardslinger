@@ -4,7 +4,7 @@ import { MoneyDisplay } from './MoneyDisplay'
 
 interface Props {}
 
-const topBarPath = `${process.env.PUBLIC_URL}/assets/top-bar`
+const topBarPath = `assets/top-bar`
 
 export const TopBar: React.FC<Props> = () => {
   const money = useAppSelector((state) => state.player.money)
