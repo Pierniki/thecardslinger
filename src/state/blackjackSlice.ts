@@ -8,11 +8,11 @@ import {
   splitAction,
   standAction,
 } from 'engine/blackjack'
-import { createNewDeck, shuffleDeck } from 'engine/common'
+import { createNewDeck, markDeckCards, shuffleDeck } from 'engine/common'
 
 const initialState: Blackjack = {
   state: 'betting',
-  deck: shuffleDeck(createNewDeck()),
+  deck: shuffleDeck(markDeckCards(createNewDeck())),
   dealer: { cards: [], state: 'waiting' },
   hands: [createNewHand(0)],
 }

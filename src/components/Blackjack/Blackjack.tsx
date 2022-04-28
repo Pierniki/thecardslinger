@@ -34,7 +34,11 @@ export const Blackjack: React.FC<Props> = (props) => {
   return (
     <>
       <div className="flex flex-1 flex-col justify-between items-center text-center">
-        <DealerHand dealer={blackjack.dealer} showDealerCard={showDealerCard} />
+        <DealerHand
+          dealer={blackjack.dealer}
+          showDealerCard={showDealerCard}
+          deck={blackjack.deck}
+        />
         <PlayersHands
           hands={blackjack.hands}
           currentHand={currentHand}

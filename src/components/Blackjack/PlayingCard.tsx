@@ -4,20 +4,29 @@ import React from 'react'
 interface Props {
   card: Card
   hidden?: boolean
+  disableTransform?: boolean
 }
 
 const color = '#715f4d'
 const cardsPath = '/assets/cards'
 
-export const PlayingCard: React.FC<Props> = ({ card, hidden }) => {
+export const PlayingCard: React.FC<Props> = ({
+  card,
+  hidden,
+  disableTransform,
+}) => {
   return (
     <div
       className={` h-20 font-card w-14 relative flex items-center bg-center bg-cover justify-center transform font-bold text-lg`}
       style={{
         backgroundImage: hidden
-          ? `url(${cardsPath}/card_back_1.png)`
-          : `url(${cardsPath}/card.png)`,
-        transform: card.transform,
+          ? `url(${cardsPath}/card_back_1${
+              card.marked ? `_marked_${markMap[card.marked]}` : ''
+            }.png)`
+          : `url(${cardsPath}/card${
+              card.marked ? `_marked_${markMap[card.marked]}` : ''
+            }.png)`,
+        transform: disableTransform ? undefined : card.transform,
         color: color,
       }}
     >
@@ -36,6 +45,12 @@ export const PlayingCard: React.FC<Props> = ({ card, hidden }) => {
       )}
     </div>
   )
+}
+
+const markMap = {
+  obvious: '1',
+  'semi-obvious': '2',
+  sneaky: '3',
 }
 
 const valueMap = {
