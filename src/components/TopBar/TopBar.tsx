@@ -4,7 +4,7 @@ import { MoneyDisplay } from './MoneyDisplay'
 
 interface Props {}
 
-const topBarPath = `assets/top-bar`
+const topBarPath = `${process.env.PUBLIC_URL}/assets/top-bar`
 
 export const TopBar: React.FC<Props> = () => {
   const money = useAppSelector((state) => state.player.money)
@@ -14,21 +14,21 @@ export const TopBar: React.FC<Props> = () => {
       <div
         className="min-w-[60px] mb-ext:block hidden bg-right bg-no-repeat bg-cover h-[80px]"
         style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/${topBarPath}/corner-left.png)`,
+          backgroundImage: `url(${topBarPath}/corner-left.png)`,
           backgroundSize: 'auto 100%',
         }}
       />
       <div
         className="w-full mb-ext:block hidden bg-right bg-cover h-[56px]"
         style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/${topBarPath}/tile-top-left.png)`,
+          backgroundImage: `url(${topBarPath}/tile-top-left.png)`,
           backgroundSize: 'auto 100%',
         }}
       />
       <div
         className="mb-ext:min-w-[450px] max-w-[450px] w-full h-[60px] flex justify-between items-start gap-8 px-5 pb-[18px] pt-[14px]  relative bg-top bg-no-repeat"
         style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/${topBarPath}/top-bg2.png)`,
+          backgroundImage: `url(${topBarPath}/top-bg2.png)`,
           backgroundSize: '100% 100%',
         }}
       >
@@ -38,7 +38,7 @@ export const TopBar: React.FC<Props> = () => {
       <div
         className="w-full mb-ext:block hidden bg-right  bg-cover h-[56px]"
         style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/${topBarPath}/tile-top-right.png)`,
+          backgroundImage: `url(${topBarPath}/tile-top-right.png)`,
           backgroundSize: 'auto 100%',
         }}
       />

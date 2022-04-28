@@ -8,7 +8,7 @@ interface Props {
 }
 
 const color = '#715f4d'
-const cardsPath = `assets/cards`
+const cardsPath = `${process.env.PUBLIC_URL}/assets/cards`
 
 export const PlayingCard: React.FC<Props> = ({
   card,
@@ -20,10 +20,10 @@ export const PlayingCard: React.FC<Props> = ({
       className={` h-20 font-card w-14 relative flex items-center bg-center bg-cover justify-center transform font-bold text-lg`}
       style={{
         backgroundImage: hidden
-          ? `url(${process.env.PUBLIC_URL}/${cardsPath}/card_back_1${
+          ? `url(${cardsPath}/card_back_1${
               card.marked ? `_marked_${markMap[card.marked]}` : ''
             }.png)`
-          : `url(${process.env.PUBLIC_URL}/${cardsPath}/card${
+          : `url(${cardsPath}/card${
               card.marked ? `_marked_${markMap[card.marked]}` : ''
             }.png)`,
         transform: disableTransform ? undefined : card.transform,

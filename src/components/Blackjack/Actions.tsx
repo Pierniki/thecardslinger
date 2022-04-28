@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react'
 import { Blackjack, getPossibleCardsValue } from 'engine'
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useAppDispatch } from 'state'
 import { bet, doubleDown, hit, split, stand } from 'state/blackjackSlice'
 import { removeMoney } from 'state/playerSlice'
@@ -17,6 +17,8 @@ export const Actions: React.FC<Props> = ({
   currentHandIdx,
 }) => {
   const dispatch = useAppDispatch()
+
+  const [betSize, setBetSize] = useState<number>(1)
 
   const canBet = (handIdx: number) =>
     blackjack.state === 'betting' && blackjack.hands[handIdx].bet === 0
@@ -53,21 +55,34 @@ export const Actions: React.FC<Props> = ({
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
         >
-          <button
-            disabled={!canBet(currentHandIdx)}
-            className="px-4 py-2 bg-no-repeat bg-center w-full text-[#b58057] shadow-md transform hover:-translate-y-px duration-100 -mt-1 "
-            style={{
-              backgroundImage: `url(${process.env.PUBLIC_URL}/assets/button.png)`,
-              backgroundSize: '100% 100%',
-              textShadow: '1px 1px 10px #000000',
-            }}
-            onClick={() => {
-              dispatch(bet({ handIdx: currentHandIdx, bet: 1 }))
-              dispatch(removeMoney({ amount: 1 }))
-            }}
-          >
-            Bet <span className="text-[#eca91f]">1$</span>
-          </button>
+          <div className="w-full">
+            <input
+              type="range"
+              min={1}
+              step={1}
+              max={money}
+              value={betSize}
+              onChange={(e) => setBetSize(parseFloat(e.target.value))}
+              className="w-full mt-2 mb-4 slider bg-center bg-no-repeat"
+            />
+
+            <button
+              disabled={!canBet(currentHandIdx)}
+              className="px-4 py-2 bg-no-repeat bg-center w-full text-[#b58057] shadow-md transform hover:-translate-y-px duration-100 "
+              style={{
+                backgroundImage: `url(${process.env.PUBLIC_URL}/assets/button.png)`,
+                backgroundSize: '100% 100%',
+                textShadow: '1px 1px 10px #000000',
+              }}
+              onClick={() => {
+                dispatch(bet({ handIdx: currentHandIdx, bet: betSize }))
+                dispatch(removeMoney({ amount: betSize }))
+                setBetSize(1)
+              }}
+            >
+              Bet <span className="text-[#eca91f]">{`${betSize}$`}</span>
+            </button>
+          </div>
         </Transition>
         {blackjack.state !== 'betting' && (
           <>
@@ -138,7 +153,11 @@ export const Actions: React.FC<Props> = ({
                 }}
                 onClick={() => {
                   dispatch(doubleDown({ handIdx: currentHandIdx }))
-                  dispatch(removeMoney({ amount: 1 }))
+                  dispatch(
+                    removeMoney({
+                      amount: blackjack.hands[currentHandIdx].bet,
+                    }),
+                  )
                 }}
               >
                 Double down
@@ -164,7 +183,7 @@ export const Actions: React.FC<Props> = ({
                 }}
                 onClick={() => {
                   dispatch(split({ handIdx: currentHandIdx }))
-                  dispatch(removeMoney({ amount: 1 }))
+                  dispatch(removeMoney({ amount: betSize }))
                 }}
               >
                 Split
