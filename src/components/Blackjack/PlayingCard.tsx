@@ -8,7 +8,7 @@ interface Props {
 }
 
 const color = '#715f4d'
-const cardsPath = '/assets/cards'
+const cardsPath = `${process.env.PUBLIC_URL}/assets/cards`
 
 export const PlayingCard: React.FC<Props> = ({
   card,

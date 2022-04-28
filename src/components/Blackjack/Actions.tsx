@@ -37,7 +37,7 @@ export const Actions: React.FC<Props> = ({
     <div className=" h-[150px] bg-[#0f0b1c] mt-8  font-card  w-full relative pt-1">
       <div
         style={{
-          backgroundImage: 'url(/assets/menu-ornament.png)',
+          backgroundImage: `url(${process.env.PUBLIC_URL}/assets/menu-ornament.png)`,
           backgroundSize: '100% 100%',
         }}
         className="absolute -top-4 h-4 w-full"
@@ -57,7 +57,7 @@ export const Actions: React.FC<Props> = ({
             disabled={!canBet(currentHandIdx)}
             className="px-4 py-2 bg-no-repeat bg-center w-full text-[#b58057] shadow-md transform hover:-translate-y-px duration-100 -mt-1 "
             style={{
-              backgroundImage: 'url(/assets/button.png)',
+              backgroundImage: `url(${process.env.PUBLIC_URL}/assets/button.png)`,
               backgroundSize: '100% 100%',
               textShadow: '1px 1px 10px #000000',
             }}
@@ -85,7 +85,7 @@ export const Actions: React.FC<Props> = ({
                 disabled={!canHit(currentHandIdx)}
                 className="px-4 py-1 bg-no-repeat bg-center w-full text-[#b58057] shadow-md transform hover:-translate-y-px duration-200 -mt-1"
                 style={{
-                  backgroundImage: 'url(/assets/button.png)',
+                  backgroundImage: `url(${process.env.PUBLIC_URL}/assets/button.png)`,
                   backgroundSize: '100% 100%',
                   textShadow: '1px 1px 10px #000000',
                 }}
@@ -108,7 +108,7 @@ export const Actions: React.FC<Props> = ({
                 disabled={!canHit(currentHandIdx)}
                 className="px-4 py-1 bg-no-repeat bg-center w-full text-[#b58057] shadow-md transform hover:-translate-y-px duration-200"
                 style={{
-                  backgroundImage: 'url(/assets/button2.png)',
+                  backgroundImage: `url(${process.env.PUBLIC_URL}/assets/button2.png)`,
                   backgroundSize: '100% 100%',
                   textShadow: '1px 1px 10px #000000',
                 }}
@@ -132,7 +132,7 @@ export const Actions: React.FC<Props> = ({
                 disabled={!canDD(currentHandIdx)}
                 className="px-4 py-1 bg-no-repeat bg-center w-full text-[#b58057] shadow-md transform hover:-translate-y-px duration-200"
                 style={{
-                  backgroundImage: 'url(/assets/button3.png)',
+                  backgroundImage: `url(${process.env.PUBLIC_URL}/assets/button3.png)`,
                   backgroundSize: '100% 100%',
                   textShadow: '1px 1px 10px #000000',
                 }}
@@ -158,7 +158,7 @@ export const Actions: React.FC<Props> = ({
                 disabled={!canSplit(currentHandIdx)}
                 className="px-4 py-1 bg-no-repeat bg-center w-full text-[#b58057] shadow-md transform hover:-translate-y-px duration-200"
                 style={{
-                  backgroundImage: 'url(/assets/button2.png)',
+                  backgroundImage: `url(${process.env.PUBLIC_URL}/assets/button2.png)`,
                   backgroundSize: '100% 100%',
                   textShadow: '1px 1px 10px #000000',
                 }}
