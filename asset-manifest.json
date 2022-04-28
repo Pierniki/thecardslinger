@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/thecardslinger/static/css/main.a82b5089.css",
-    "main.js": "/thecardslinger/static/js/main.5a09f48f.js",
+    "main.js": "/thecardslinger/static/js/main.83c9ec1f.js",
     "static/js/787.11cf3159.chunk.js": "/thecardslinger/static/js/787.11cf3159.chunk.js",
     "static/media/SMB.ttf": "/thecardslinger/static/media/SMB.7e2c6f00fe21b40cdf5e.ttf",
     "static/media/slkscr.ttf": "/thecardslinger/static/media/slkscr.2f28a155fd8444a957f2.ttf",
     "index.html": "/thecardslinger/index.html",
     "main.a82b5089.css.map": "/thecardslinger/static/css/main.a82b5089.css.map",
-    "main.5a09f48f.js.map": "/thecardslinger/static/js/main.5a09f48f.js.map",
+    "main.83c9ec1f.js.map": "/thecardslinger/static/js/main.83c9ec1f.js.map",
     "787.11cf3159.chunk.js.map": "/thecardslinger/static/js/787.11cf3159.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a82b5089.css",
-    "static/js/main.5a09f48f.js"
+    "static/js/main.83c9ec1f.js"
   ]
 }
