@@ -34,7 +34,7 @@ export const Actions: React.FC<Props> = ({
       blackjack.hands[handIdx].cards[1].value
 
   return (
-    <div className=" h-[150px] bg-[#0f0b1c] mt-8  font-card  w-full relative pt-2">
+    <div className=" h-[150px] bg-[#0f0b1c] mt-8  font-card  w-full relative pt-1">
       <div
         style={{
           backgroundImage: 'url(/assets/menu-ornament.png)',
@@ -42,7 +42,7 @@ export const Actions: React.FC<Props> = ({
         }}
         className="absolute -top-4 h-4 w-full"
       />
-      <div className="max-w-md mx-auto  w-full flex flex-col items-center justify-start gap-1">
+      <div className="max-w-md mx-auto  w-full flex flex-col items-center justify-start gap-1  overflow-x-hidden pt-1">
         <Transition
           show={blackjack.state === 'betting'}
           as={Fragment}
