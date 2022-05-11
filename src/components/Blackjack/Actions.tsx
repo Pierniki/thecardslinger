@@ -28,7 +28,7 @@ export const Actions: React.FC<Props> = ({
     getPossibleCardsValue(blackjack.hands[handIdx].cards)[0] < 21
   const canDD = (handIdx: number) =>
     canHit(handIdx) &&
-    money > blackjack.hands[handIdx].bet &&
+    money >= blackjack.hands[handIdx].bet &&
     blackjack.hands[handIdx].cards.length === 2
   const canSplit = (handIdx: number) =>
     canDD(handIdx) &&

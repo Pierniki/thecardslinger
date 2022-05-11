@@ -5,6 +5,7 @@ interface Props {
   card: Card
   hidden?: boolean
   disableTransform?: boolean
+  elevated?: boolean
 }
 
 const color = '#715f4d'
@@ -37,6 +38,7 @@ export const PlayingCard: React.FC<Props> = ({
             src={`${cardsPath}/${card.pip}.png`}
             alt={card.pip}
             className="w-[25px] h-[25px]"
+            draggable="false"
           />
           <span className="absolute right-2 bottom-0">
             {valueMap[card.value]}

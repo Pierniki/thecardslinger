@@ -59,7 +59,7 @@ export const DealerHand: React.FC<Props> = ({
 
         {dealer.cards.map((card, idx) => {
           return (
-            <div className="-ml-2">
+            <div className="-ml-2" key={'dealer-card' + card.pip + card.value}>
               <PlayingCard
                 card={card}
                 hidden={!showDealerCard && idx !== 0}
