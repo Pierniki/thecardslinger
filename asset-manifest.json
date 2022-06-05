@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/thecardslinger/static/css/main.ebb60aa5.css",
-    "main.js": "/thecardslinger/static/js/main.c3a76db8.js",
+    "main.css": "/thecardslinger/static/css/main.e8a81f04.css",
+    "main.js": "/thecardslinger/static/js/main.05c9641c.js",
     "static/js/787.11cf3159.chunk.js": "/thecardslinger/static/js/787.11cf3159.chunk.js",
     "static/media/SMB.ttf": "/thecardslinger/static/media/SMB.7e2c6f00fe21b40cdf5e.ttf",
     "static/media/slkscr.ttf": "/thecardslinger/static/media/slkscr.2f28a155fd8444a957f2.ttf",
     "index.html": "/thecardslinger/index.html",
-    "main.ebb60aa5.css.map": "/thecardslinger/static/css/main.ebb60aa5.css.map",
-    "main.c3a76db8.js.map": "/thecardslinger/static/js/main.c3a76db8.js.map",
+    "main.e8a81f04.css.map": "/thecardslinger/static/css/main.e8a81f04.css.map",
+    "main.05c9641c.js.map": "/thecardslinger/static/js/main.05c9641c.js.map",
     "787.11cf3159.chunk.js.map": "/thecardslinger/static/js/787.11cf3159.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ebb60aa5.css",
-    "static/js/main.c3a76db8.js"
+    "static/css/main.e8a81f04.css",
+    "static/js/main.05c9641c.js"
   ]
 }
